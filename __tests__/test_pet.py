@@ -24,18 +24,40 @@ headers = { 'Content-Type': 'application/json' }    # formato dos dados trafegad
 def test_post_pet():
     # configura
     # dados de entrada estão no arquivo json
-    pet=('./fixtures/json/pet1.json')           # abre o arquivo json
+    pet=open('./fixtures/json/pet1.json')           # abre o arquivo json
     data=json.loads(pet.read())                 # ler o conteudo e carrega como json em uma variavel data
     # dados de saída / resultado esperado estão nos atributos acima das funçǒes
     
     # executa
-    response = requests.post(
+    response = requests.post(       # executa o metodo post com as informacoes a seguir
         url=url,                    # endereco
         headers=headers,            # cabecalho / informacoes extras da mensagem
         data=json.dumps(data),      # a mensagem = json
         timeout=5                   # tempo limite da transmissao, em segundos
     )
 
-
-
     # valida
+    response_body = response.json()       # cria uma variavel e carrega a resposta em formato json
+
+    assert response.status_code == 200
+    assert response_body['id'] == pet_id
+    assert response_body['name'] == pet_name
+    assert response_body['category']['name'] == pet_category_name
+    assert response_body['tags'][0]['name'] == pet_tag_name
+
+def test_get_pet():
+    # Dados de Entrada e Saida / Resultado esperado estão na seção de atributos antes das funcoes
+
+    response = requests.get(
+        url=f'{url}/{pet_id}',    # chama o endereço do get/consulta passando o código do animal
+        headers=headers
+        # não tem corpo
+    )
+
+    response_body = response.json()
+
+    assert response.status_code == 200
+    assert response_body['name'] == pet_name
+    assert response_body['category']['id'] == pet_category_id
+    assert response_body['tags'][0]['id'] == pet_tag_id    
+    assert response_body['status'] == pet_status
