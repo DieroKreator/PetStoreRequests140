@@ -1,7 +1,9 @@
 # 1 - bibliotecas
 import json
 import pytest       # engine / framework de teste de unidade
-import requests     # framework de teste de API
+import requests
+
+from utils.utils import ler_csv     # framework de teste de API
 
 # 2 - classe (opcional no Python, em muitos casos)
 
@@ -106,3 +108,18 @@ def test_delete_pet():
     assert response_body['code'] == 200
     assert response_body['type'] == 'unknown'
     assert response_body['message'] == str(pet_id)
+
+
+@pytest.mark.parametrize('pet_id,category_id,category_name,pet_name,tag_status',
+                         ler_csv('./fixtures/csv/pets.csv'))
+def test_post_pet_dinamico(pet_id,category_id,category_name,pet_name,tag_status):
+
+    pet = {}        # cria uma lista vazia chamada pet
+    pet['id'] = int(pet_id)
+    pet['category'] = {}
+    pet['category']['id'] = int(category_id)
+    pet['category']['name'] = int(category_name)
+    pet['name'] = pet_name
+    pet['photoUrls'] = []
+    pet['photoUrls'].append('')
+    pet['tags'] = []

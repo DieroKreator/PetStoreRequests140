@@ -1,0 +1,3 @@
+pet_id,category_id,category_name,pet_name,tag_status
+602740502,2,cat,Timo,1-vacinado,2-vermifugado,available
+602740503,3,fish,Blue,3-raro,available
