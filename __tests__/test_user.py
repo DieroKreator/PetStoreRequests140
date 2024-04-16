@@ -57,7 +57,7 @@ def test_put_user():
     data=json.loads(user.read()) 
 
     response = requests.put(
-        url=url,
+        url=f'{url}/{username}',
         headers=headers,
         data=json.dumps(data),
         timeout=5
