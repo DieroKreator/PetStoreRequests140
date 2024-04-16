@@ -16,6 +16,8 @@ user_status = 1
 url = 'https://petstore.swagger.io/v2/user'          # endereço
 headers = { 'Content-Type': 'application/json' } 
 
+# 1 - Incluir, consultar, alterar e excluir um usuário, 
+# sempre com o teste do Status Code e pelo menos 3 testes de campos do retorno.
 def test_post_user():
     user=open('./fixtures/json/user1.json')
     data=json.loads(user.read()) 
@@ -82,3 +84,7 @@ def test_delete_user():
     assert response_body['code'] == 200
     assert response_body['type'] == "unknown"
     assert response_body['message'] == username
+
+
+# 3 - Altere a função Post e Delete da entidade User 
+# para que executem os testes a partir de uma massa com json dinamico

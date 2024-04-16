@@ -18,8 +18,8 @@ url = 'https://petstore.swagger.io/v2/store/order'          # endereço
 headers = { 'Content-Type': 'application/json' } 
 
 
-# 2.2 - funções / métodos
-
+# 2 - Incluir, consultar e excluir um pedido de compra, 
+# sempre com o teste do Status Code e pelo menos 3 testes de campos do retorno.
 def test_post_store_order():
 
     store=open('./fixtures/json/store.json')
