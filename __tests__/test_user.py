@@ -53,7 +53,7 @@ def test_get_user():
     assert response_body['userStatus'] == user_status
 
 def test_put_user():
-    user=open('./fixtures/json/user2.json', encoding='utf-8')
+    user=open('./fixtures/json/user2.json')
     data=json.loads(user.read()) 
 
     response = requests.put(
