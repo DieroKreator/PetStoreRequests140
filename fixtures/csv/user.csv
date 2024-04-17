@@ -1,6 +1,5 @@
-
 user_id,username,first_name,last_name,email,password,phone,user_status
 60814379199,figotti,Fidel,Santos,figotti@gmail.com,123456,51452895685,1
-60814379200,capra,Carlos,Prano,capra@gmail.com,127656,51452895692,0
+60814379200,capra,Carlos,Prano,capra@gmail.com,127656,51452895692,1
 60814379201,guire,Guilherme,Reno,guire@gmail.com,127634,51452895676,1
 60814379202,hiko,Hinem,Koppra,hiko@gmail.com,125656,51452895638,1
