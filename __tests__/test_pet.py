@@ -153,7 +153,6 @@ def test_post_pet_dinamico(pet_id,category_id,category_name,pet_name,tags,status
     assert response_body['status'] == status
 
 
-    ## TO DO ##
     # Other operations dynamically
 @pytest.mark.parametrize('pet_id,category_id,category_name,pet_name,tags,status',
                          ler_csv('./fixtures/csv/pets.csv'))
