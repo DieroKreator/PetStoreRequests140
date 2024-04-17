@@ -225,8 +225,7 @@ def test_put_pet_dinamico(pet_id,category_id,category_name,pet_name,tags,status)
         tag_formatada['name'] = tag[1]
         pet['tags'].append(tag_formatada)
 
-    pet['status'] = status
-    status = "sold"
+    pet['status'] = 'sold'
 
     pet = json.dumps(obj=pet, indent=4)
     print('\n' + pet)                
@@ -245,10 +244,30 @@ def test_put_pet_dinamico(pet_id,category_id,category_name,pet_name,tags,status)
     assert response.status_code == 200
     assert response_body['id'] == int(pet_id)
     assert response_body['name'] == pet_name
-    # assert response_body['category']['id'] == category_id
-    # assert response_body['category']['name'] == category_name
-    # assert response_body['tags'][0]['id'] == pet_tag_id
-    # assert response_body['tags'][0]['name'] == pet_tag_name
+    assert response_body['category']['id'] == int(category_id)
+    assert response_body['category']['name'] == category_name
+    for x in range(len(tags)):
+        tag = tags[x]
+        tag = tag.split("-")
+        assert response_body['tags'][x]['id'] == int(tag[0])
+        assert response_body['tags'][x]['name'] == tag[1]
     assert response_body['status'] == 'sold'
 
-    # Other Store and parts of the API
+@pytest.mark.parametrize('pet_id,category_id,category_name,pet_name,tags,status',
+                         ler_csv('./fixtures/csv/pets.csv'))
+def test_delete_pet_dinamico(pet_id,category_id,category_name,pet_name,tags,status):
+
+    # Executa
+    response = requests.delete(
+        url=f'{url}/{pet_id}',
+        headers=headers,
+        timeout=5
+    )
+
+    # Valida
+    response_body = response.json()
+
+    assert response.status_code == 200
+    assert response_body['code'] == 200
+    assert response_body['type'] == 'unknown'
+    assert response_body['message'] == str(pet_id)
