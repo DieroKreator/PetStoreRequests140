@@ -1,5 +1,6 @@
-pet_id,category_id,category_name,pet_name,tags,status
-602740502,2,cat,Timo,1-vacinado;2-vermifugado,available
-602740503,3,fish,Blue,3-raro,available
-602740504,1,dog,Gari,2-vermifugado,available
-602740505,4,bird,Orly,3-raro,available
+
+user_id,username,first_name,last_name,email,password,phone,user_status
+60814379199,figotti,Fidel,Santos,figotti@gmail.com,123456,51452895685,1
+60814379200,capra,Carlos,Prano,capra@gmail.com,127656,51452895692,0
+60814379201,guire,Guilherme,Reno,guire@gmail.com,127634,51452895676,1
+60814379202,hiko,Hinem,Koppra,hiko@gmail.com,125656,51452895638,1
