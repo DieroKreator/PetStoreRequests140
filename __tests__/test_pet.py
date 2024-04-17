@@ -155,4 +155,100 @@ def test_post_pet_dinamico(pet_id,category_id,category_name,pet_name,tags,status
 
     ## TO DO ##
     # Other operations dynamically
+@pytest.mark.parametrize('pet_id,category_id,category_name,pet_name,tags,status',
+                         ler_csv('./fixtures/csv/pets.csv'))
+def test_get_pet_dinamico(pet_id,category_id,category_name,pet_name,tags,status):
+
+    tags = tags.split(';')
+
+    # Executa
+    response = requests.get(
+        url=f'{url}/{pet_id}',
+        headers=headers
+    )
+
+    response_body = response.json()
+
+    assert response.status_code == 200
+    assert response_body['category']['id'] == int(category_id)
+    assert response_body['name'] == pet_name
+    # assert response_body['tags'][0]['id'] == int(tag[0])        # to investigate
+    for x in range(len(tags)):
+        tag = tags[x]
+        tag = tag.split("-")
+        assert response_body['tags'][x]['id'] == int(tag[0])
+        assert response_body['tags'][x]['name'] == tag[1]
+    assert response_body['status'] == status
+
+# @pytest.mark.parametrize('id, category_id, category_name, name, photoUrls, tags, status', 
+#                          ler_csv('./fixtures/csv/massaPet.csv'))
+# def test_get_pet_dinamico2(id, category_id, category_name, name, photoUrls, tags, status):
+
+#     tags = tags.split(';')
+#     tags_separadas = []
+#     for tag in tags:
+#         tags_separadas.append(tag.split('-'))
+
+#     response = requests.get(
+#         url=f'{url}/{pet_id}',
+#         headers=headers,
+#     )
+#     response_body = response.json()
+
+#     assert response.status_code == 200
+#     assert response_body['id'] == int(id)
+#     assert response_body['name'] == name
+
+#     for x in range(len(tags)):
+#         assert response_body['tags'][x]['id'] == int(tags_separadas[x][0])
+#         assert response_body['tags'][x]['name'] == tags_separadas[x][1]
+
+@pytest.mark.parametrize('pet_id,category_id,category_name,pet_name,tags,status',
+                         ler_csv('./fixtures/csv/pets.csv'))
+def test_put_pet_dinamico(pet_id,category_id,category_name,pet_name,tags,status):
+    # Configura
+    pet = {}   
+    pet['id'] = int(pet_id)
+    pet['category'] = {}
+    pet['category']['id'] = int(category_id)
+    pet['category']['name'] = category_name
+    pet['name'] = pet_name
+    pet['photoUrls'] = []
+    pet['photoUrls'].append('')
+    pet['tags'] = []
+
+    tags = tags.split(';')
+    for tag in tags:
+        tag = tag.split('-')
+        tag_formatada = {}
+        tag_formatada['id'] = int(tag[0])
+        tag_formatada['name'] = tag[1]
+        pet['tags'].append(tag_formatada)
+
+    pet['status'] = status
+    status = "sold"
+
+    pet = json.dumps(obj=pet, indent=4)
+    print('\n' + pet)                
+
+    # Executa
+    response = requests.put(
+        url=url,
+        headers=headers,
+        data=pet,
+        timeout=5
+    )
+
+    # Compara
+    response_body = response.json()
+
+    assert response.status_code == 200
+    assert response_body['id'] == int(pet_id)
+    assert response_body['name'] == pet_name
+    # assert response_body['category']['id'] == category_id
+    # assert response_body['category']['name'] == category_name
+    # assert response_body['tags'][0]['id'] == pet_tag_id
+    # assert response_body['tags'][0]['name'] == pet_tag_name
+    assert response_body['status'] == 'sold'
+
     # Other Store and parts of the API
