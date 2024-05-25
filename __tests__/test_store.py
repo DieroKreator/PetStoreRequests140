@@ -74,7 +74,7 @@ def test_delete_store_order():
     assert response.status_code == 200
     assert response_body['code'] == 200
     assert response_body['type'] == 'unknown'
-    assert response_body['message'] == str(store_id)
+    assert response_body['message'] == str(order_id)
 
 
 # Read file dynamically
